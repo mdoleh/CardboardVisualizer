@@ -16,7 +16,7 @@ public class Analyzer : MonoBehaviour {
     private float fSample;
     private float previous = 0f;
 
-    public Visualizer visualizer;
+    private Visualizer visualizer;
     private AudioSource audioSource;
 
     void Start()
@@ -29,6 +29,7 @@ public class Analyzer : MonoBehaviour {
     private void Awake()
     {
         audioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+        visualizer = GetComponent<Visualizer>();
     }
 
     void AnalyzeSound()
@@ -80,6 +81,6 @@ public class Analyzer : MonoBehaviour {
 //            " (" + dbValue.ToString("F1") + " dB)\n" +
 //            "Pitch: " + pitchValue.ToString("F0") + " Hz";
 //        }
-        visualizer.ChangeVisual(pitchValue);
+        visualizer.ChangeVisual(dbValue);
     }
 }
