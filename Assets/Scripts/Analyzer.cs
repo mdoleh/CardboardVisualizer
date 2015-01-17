@@ -16,6 +16,9 @@ public class Analyzer : MonoBehaviour {
     private float fSample;
     private float previous = 0f;
 
+    public Visualizer visualizer;
+    private AudioSource audioSource;
+
     void Start()
     {
         samples = new float[qSamples];
@@ -23,9 +26,14 @@ public class Analyzer : MonoBehaviour {
         fSample = AudioSettings.outputSampleRate;
     }
 
+    private void Awake()
+    {
+        audioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+    }
+
     void AnalyzeSound()
     {
-        audio.GetOutputData(samples, 0); // fill array with samples
+        audioSource.GetOutputData(samples, 0); // fill array with samples
         int i;
         float sum = 0f;
         for (i = 0; i < qSamples; i++)
@@ -36,7 +44,7 @@ public class Analyzer : MonoBehaviour {
         dbValue = 20 * Mathf.Log10(rmsValue / refValue); // calculate dB
         if (dbValue < -160) dbValue = -160; // clamp it to -160dB min
         // get sound spectrum
-        audio.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
+        audioSource.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
         float maxV = 0;
         int maxN = 0;
         for (i = 0; i < qSamples; i++)
@@ -57,20 +65,21 @@ public class Analyzer : MonoBehaviour {
         pitchValue = freqN * (fSample / 2) / qSamples; // convert index to frequency
     }
 
-    public Text display; // drag a GUIText here to show results
+    //public Text display; // drag a GUIText here to show results
 
     void Update()
     {
         if (Input.GetKeyDown("p"))
         {
-            audio.Play();
+            audioSource.Play();
         }
         AnalyzeSound();
-        if (display)
-        {
-            display.text = "RMS: " + rmsValue.ToString("F2") +
-            " (" + dbValue.ToString("F1") + " dB)\n" +
-            "Pitch: " + pitchValue.ToString("F0") + " Hz";
-        }
+//        if (display)
+//        {
+//            display.text = "RMS: " + rmsValue.ToString("F2") +
+//            " (" + dbValue.ToString("F1") + " dB)\n" +
+//            "Pitch: " + pitchValue.ToString("F0") + " Hz";
+//        }
+        visualizer.ChangeVisual(pitchValue);
     }
 }
