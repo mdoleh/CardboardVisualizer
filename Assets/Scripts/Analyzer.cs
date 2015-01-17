@@ -18,6 +18,7 @@ public class Analyzer : MonoBehaviour {
 
     private Visualizer visualizer;
     private AudioSource audioSource;
+    private bool songPlaying = false;
 
     void Start()
     {
@@ -70,9 +71,10 @@ public class Analyzer : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("p"))
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().rotation.eulerAngles.y > 30 && !songPlaying)
         {
             audioSource.Play();
+            songPlaying = true;
         }
         AnalyzeSound();
 //        if (display)
