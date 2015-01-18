@@ -16,6 +16,7 @@ public class BarVisualizer : Visualizer
 
     public override void ChangeVisual(float dbValue, float pitchValue)
     {
+        if (dbValue < 0) dbValue = 0;
         randomAmplitude = Random.Range(0.5f, 1.5f);
         transform.localScale = new Vector3((dbValue * amplitude * randomAmplitude) + startScale.x, minValue, minValue);
     }
