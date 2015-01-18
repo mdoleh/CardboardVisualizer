@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -71,7 +72,7 @@ public class Analyzer : MonoBehaviour {
 
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().rotation.eulerAngles.y > 30 && !songPlaying)
+        if (!songPlaying && Time.time > 10)
         {
             audioSource.Play();
             songPlaying = true;
@@ -83,6 +84,6 @@ public class Analyzer : MonoBehaviour {
 //            " (" + dbValue.ToString("F1") + " dB)\n" +
 //            "Pitch: " + pitchValue.ToString("F0") + " Hz";
 //        }
-        visualizer.ChangeVisual(dbValue);
+        visualizer.ChangeVisual(dbValue, pitchValue);
     }
 }

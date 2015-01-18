@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using System.Collections;
 
-public class Visualizer : MonoBehaviour {
+public abstract class Visualizer : MonoBehaviour
+{
+    protected Transform[] children;
 
-    public void ChangeVisual(float analyzed)
+    private void Awake()
     {
-        float value = analyzed / 25;
-        if (value < 0.1) value = 0.1f;
-        transform.localScale = new Vector3(value, 1f, 1f);
+        children = GetComponentsInChildren<Transform>();
     }
+
+    public abstract void ChangeVisual(float value, float pitchValue);
 }

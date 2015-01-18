@@ -26,10 +26,8 @@ public class ColorChange : MonoBehaviour {
         float red = Random.Range(0f, 1f);
         float green = Random.Range(0f, 1f);
         float blue = Random.Range(0f, 1f);
-        float alpha = Random.Range(0f, 1f);
-        Color newColor = new Color(red, green, blue, alpha);
+        Color newColor = new Color(red, green, blue, 1.0f);
         light.color = Color.Lerp(light.color, newColor, timer / changeColourTime);
-//        light.color = Color.Lerp (colors[currentIndex], colors[nextIndex], timer / changeColourTime );
             
     }
 }
