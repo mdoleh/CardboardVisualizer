@@ -18,7 +18,7 @@ public class Analyzer : MonoBehaviour {
     private float previous = 0f;
 
     private Visualizer visualizer;
-    private AudioSource audioSource;
+    public static AudioSource audioSource;
     private bool songPlaying = false;
 
     void Start()
@@ -30,7 +30,6 @@ public class Analyzer : MonoBehaviour {
 
     private void Awake()
     {
-        audioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
         visualizer = GetComponent<Visualizer>();
     }
 
